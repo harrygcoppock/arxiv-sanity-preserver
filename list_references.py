@@ -5,6 +5,7 @@ Dumps results to file tfidf.p
 import os
 import pickle
 from random import shuffle, seed
+from tqdm import tqdm
 
 import numpy as np
 # from sklearn.feature_extraction.text import TfidfVectorizer
@@ -32,11 +33,11 @@ ref_graph = Graph()
 # read all text files for all papers into memory
 txt_paths, pids = [], []
 n = 0
-for pid,j in db.items():
+for pid,j in tqdm(db.items()):
 
     ref_graph.add_vertex(j['title'].replace('\n',''))
-    print('*'*20)
-    print(j['title'])
+    # print('*'*20)
+    # print(j['title'])
     idvv = '%sv%d' % (j['_rawid'], j['_version'])
     txt_path = os.path.join('data', 'txt', idvv) + '.pdf.txt'
     if os.path.isfile(txt_path): # some pdfs dont translate to txt
@@ -50,11 +51,15 @@ for pid,j in db.items():
 
 count = 0
 num_edges = 0
-for key, value in ref_graph.graph_dict:
+for key, value in ref_graph.graph_dict.items():
     count += 1
     num_edges += len(value)
-
+    if len(value) > 1:
+        print(key, value)
+    
+print('total number of nodes: ', count)
 print('average num edges per vertice: ',num_edges/count)
+print(ref_graph.vertices()[0:1000])
 with open('graph_dict.pickle', 'wb') as handle:
     pickle.dump(ref_graph, handle, protocol=pickle.HIGHEST_PROTOCOL)
 

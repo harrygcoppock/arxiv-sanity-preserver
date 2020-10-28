@@ -32,13 +32,12 @@ class Graph(object):
         """
 
         edge = set(edge)
-        print(edge)
 
         if len(edge) == 1:
             return
         (vertex1, vertex2) = tuple(edge)
         if vertex1 in self.graph_dict:
-            self.graph_dict[vertex1].append(vertex2)
+            self.graph_dict[vertex1].append(vertex2) 
         else:
             self.graph_dict[vertex1] = [vertex2]
 

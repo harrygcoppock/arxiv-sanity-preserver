@@ -77,7 +77,7 @@ if __name__ == "__main__":
   for i in range(args.start_index, args.max_index, args.results_per_iteration):
 
     print("Results %i - %i" % (i,i+args.results_per_iteration))
-    query = 'search_query=%s&sortBy=lastUpdatedDate&start=%i&max_results=%i' % (args.search_query,
+    query = 'search_query=%s&sortBy=lastUpdatedDate&sortOrder=ascending&start=%i&max_results=%i' % (args.search_query,
                                                          i, args.results_per_iteration)
     with urllib.request.urlopen(base_url+query) as url:
       response = url.read()
